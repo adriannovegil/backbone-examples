@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>es.devcircus</groupId>
+        <artifactId>backbone-examples</artifactId>
+        <version>0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <groupId>es.devcircus</groupId>
+    <artifactId>backbone-basic-example-01</artifactId>
+    <packaging>war</packaging>
+    <version>0.1-SNAPSHOT</version>
+    <name>backbone-basic-example-01</name>
+    <url>http://www.devcircus.com</url>
+        
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <jdk.version>1.7</jdk.version>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>${jdk.version}</source>
+                    <target>${jdk.version}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    
+    <!-- Desarrolladores que intervienen en el proyecto   -->
+    
+    <developers>
+        <developer>
+            <id>adrian.novegil</id>
+            <name>Adrian Novegil Toledo</name>
+            <email>adrian.novegil@gmail.com</email>
+            <organization>DevCircus</organization>
+        </developer>        
+    </developers>
+    
+    <!-- Dependencias   -->
+    
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.10</version>
+            <type>jar</type>
+        </dependency>
+    </dependencies>
+    
+</project>

@@ -35,15 +35,34 @@
         model: Item
     });
 
-    // **ItemView class**: Responsible for rendering each individual `Item`.
+    /**
+     * 
+     * @type @exp;Backbone@pro;View@call;extend
+     */
     var ItemView = Backbone.View.extend({
-        tagName: 'li', // name of (orphan) root tag in this.el
+        tagName: 'li',
+        /**
+         * initialize: con la función de underscore _.bindAll haremos que la 
+         * referencia a this sea la vista en las funciones indicadas (render). 
+         * Finalmente, cuando se inicia la aplicación se dibuja por primera vez 
+         * la vista.
+         * @returns {undefined}
+         */
         initialize: function() {
             _.bindAll(this, 'render'); // every function that uses 'this' as the current object should be in here
         },
+        /**
+         * render: se encarga de actualizar la vista.
+         * El método render se llamará cada vez que se redibuje la vista, es 
+         * quien se encarga de redibujarla cada vez que haya un cambio en el 
+         * modelo.
+         * @returns {_L17.Anonym$2}
+         */
         render: function() {
-            $(this.el).html('<span>' + this.model.get('part1') + ' ' + this.model.get('part2') + '</span>');
-            return this; // for chainable calls, like .render().el
+            // Modificamos el HTML para insertar un nuevo item en la lista.
+            $(this.el).html('<span>' + this.model.get('part1') + ' ' + 
+                    this.model.get('part2') + '</span>');
+            return this; 
         }
     });
 
@@ -87,6 +106,8 @@
             _.bindAll(this, 'render', 'addItem', 'appendItem');
 
             this.collection = new List();
+            // Hacemos un bind entre el método "add" del objeto Collection de 
+            // Backbone.js con nuestro método "appenItem"
             this.collection.bind('add', this.appendItem);
             // Contador de elementos añadidos.
             this.counter = 0;

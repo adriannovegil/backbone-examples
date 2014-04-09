@@ -15,7 +15,15 @@
  * <http://www.gnu.org/licenses/>.
  */
 (function($) {
-    // `Backbone.sync`: Overrides persistence storage with dummy function. This enables use of `Model.destroy()` without raising an error.
+    /**
+     * Función dummy que simula el almacen de datos. Esto permite el uso de la
+     * función MOdel.destroy() si lanzar errores.
+     * @param {type} method
+     * @param {type} model
+     * @param {type} success
+     * @param {type} error
+     * @returns {undefined}
+     */
     Backbone.sync = function(method, model, success, error) {
         success();
     }
@@ -39,30 +47,66 @@
         model: Item
     });
 
-    var ItemView = Backbone.View.extend({
-        tagName: 'li', // name of tag to be created
-        // `ItemView`s now respond to two clickable actions for each `Item`: swap and delete.
+    /**
+     * Vista que se encarga de modelar los items de la vista.
+     * @type @exp;Backbone@pro;View@call;extend
+     */
+    var ItemView = Backbone.View.extend({        
+        tagName: 'li',
+        // Lista de eventos manejados en la vista.
         events: {
+            // Evento que controla el intercambio de palabras.
             'click span.swap': 'swap',
+            // Evento que controla el borrado de los items de la lista.
             'click span.delete': 'remove'
         },
-        // `initialize()` now binds model change/removal to the corresponding handlers below.
+        /**
+         * initialize: con la función de underscore _.bindAll haremos que la 
+         * referencia a this sea la vista en las funciones indicadas (render, 
+         * unrender, swap y remove). 
+         * Finalmente, cuando se inicia la aplicación se dibuja por primera vez 
+         * la vista.
+         * @returns {undefined}
+         */
         initialize: function() {
-            _.bindAll(this, 'render', 'unrender', 'swap', 'remove'); // every function that uses 'this' as the current object should be in here
-
+            _.bindAll(this, 'render', 'unrender', 'swap', 'remove'); 
+            // Hacemos un bind entre change y remove que son las opciones que 
+            // nos ofrece cada uno de los items con las funciones que queremos
+            // ejecutar.
+            // En el caso de change, cada vez que hagamos click en la opción del
+            // listado, lanzaremos el método render de la vista actual.
+            // En el caso de remove, cuando hacemos click sobre esta opción
+            // se ejcuta tanto la función remove que se mapea directamente, como
+            // la función unrender que es la que indicamos en el bind.
             this.model.bind('change', this.render);
             this.model.bind('remove', this.unrender);
         },
-        // `render()` now includes two extra `span`s corresponding to the actions swap and delete.
+        /**
+         * render: se encarga de actualizar la vista.
+         * El método render se llamará cada vez que se redibuje la vista, es 
+         * quien se encarga de redibujarla cada vez que haya un cambio en el 
+         * modelo.
+         * @returns {_L17.Anonym$2}
+         */
         render: function() {
-            $(this.el).html('<span style="color:black;">' + this.model.get('part1') + ' ' + this.model.get('part2') + '</span> &nbsp; &nbsp; <span class="swap" style="font-family:sans-serif; color:blue; cursor:pointer;">[swap]</span> <span class="delete" style="cursor:pointer; color:red; font-family:sans-serif;">[delete]</span>');
+            $(this.el).html('<span style="color:black;">' + 
+                    this.model.get('part1') + ' ' + this.model.get('part2') + 
+                    '</span> &nbsp; &nbsp; <span class="swap" style="font-family:sans-serif; color:blue; cursor:pointer;">[swap]</span> <span class="delete" style="cursor:pointer; color:red; font-family:sans-serif;">[delete]</span>');
             return this; // for chainable calls, like .render().el
         },
-        // `unrender()`: Makes Model remove itself from the DOM.
+        /**
+         * Función que se encarga de eliminar el elemento del HTML que se ha
+         * renderizado en la insercción.
+         * @returns {undefined}
+         */
         unrender: function() {
             $(this.el).remove();
         },
-        // `swap()` will interchange an `Item`'s attributes. When the `.set()` model function is called, the event `change` will be triggered.
+        /**
+         * Función que se encarga del intercambio de las palabras de los items
+         * de la lista.
+         * @returns {undefined}
+         */
         swap: function() {
             var swapped = {
                 part1: this.model.get('part2'),
@@ -70,7 +114,11 @@
             };
             this.model.set(swapped);
         },
-        // `remove()`: We use the method `destroy()` to remove a model from its collection. Normally this would also delete the record from its persistent storage, but we have overridden that (see above).
+        /**
+         * El método destroy() se encarga de eliminar un objeto model de la 
+         * colección.
+         * @returns {undefined}
+         */
         remove: function() {
             this.model.destroy();
         }
@@ -151,7 +199,12 @@
             this.collection.add(item);
         },
         /**
-         * 
+         * Función que se encarga de añadir un nuevo elemento en la lista,
+         * para ello instancia un nuevo objeto ItemView al que le pasamos en
+         * el constructor la instancia Modelo que queremos insertar.
+         * A continuación, modificamos el HTML, concretamente la lista de 
+         * elementos, añadiendo un nuevo elemento llamando al método render de 
+         * la vista ItemView.
          * @param {type} item
          * @returns {undefined}
          */

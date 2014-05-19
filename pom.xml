@@ -64,6 +64,7 @@
         <module>backbone-basic-example-03</module>
         <module>backbone-basic-example-04</module>
         <module>backbone-basic-example-05</module>
+        <module>backbone-basic-example-06</module>
     </modules>
     
     <!-- Build Settings -->
